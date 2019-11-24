@@ -1,0 +1,8 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  App\:
+    resource: '../../*'
+    exclude: '../../{DependencyInjection,RhapsodyBundle.php}'

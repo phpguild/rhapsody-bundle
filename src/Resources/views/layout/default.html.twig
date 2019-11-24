@@ -1,0 +1,16 @@
+{% extends '@Rhapsody/base.html.twig' %}
+
+{% block body %}
+        {% block navbar %}{% endblock %}
+        {% block sidebar %}
+            {% block sidebar_links %}{% endblock %}
+        {% endblock %}
+        {% block content_wrapper %}
+            {% block content_header %}
+                {% block content_title %}{% endblock %}
+                {% block breadcrumb %}{% endblock %}
+            {% endblock %}
+            {% block content %}{% endblock %}
+        {% endblock %}
+        {% block footer %}{% endblock %}
+{% endblock %}

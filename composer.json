@@ -1,6 +1,6 @@
 {
   "name": "phpguild/rhapsody-bundle",
-  "description": "Base template for Symfony 5 administration",
+  "description": "This bundle allows the creation of simple and fast administration for Symfony 4 and 5.",
   "type": "bundle",
   "license": "MIT",
   "authors": [
