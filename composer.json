@@ -1,0 +1,20 @@
+{
+  "name": "phpguild/rhapsody-bundle",
+  "description": "Base template for Symfony 5 administration",
+  "type": "bundle",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Johnstyle",
+      "homepage": "https://github.com/johnstyle"
+    }
+  ],
+  "require": {
+    "php": ">=7.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "PhpGuild\\RhapsodyBundle\\": "src/"
+    }
+  }
+}
