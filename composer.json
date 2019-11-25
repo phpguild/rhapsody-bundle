@@ -10,7 +10,9 @@
     }
   ],
   "require": {
-    "php": ">=7.1"
+    "php": ">=7.1",
+    "knplabs/knp-menu-bundle": "^2.3",
+    "symfony/property-access": "*"
   },
   "autoload": {
     "psr-4": {

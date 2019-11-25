@@ -3,6 +3,12 @@ services:
     autowire: true
     autoconfigure: true
 
-  App\:
+  PhpGuild\RhapsodyBundle\:
     resource: '../../*'
     exclude: '../../{DependencyInjection,RhapsodyBundle.php}'
+
+  rhapsody.sidebar_menu:
+    class: Knp\Menu\MenuItem
+    factory: ['@PhpGuild\RhapsodyBundle\Menu\MenuBuilder', createSidebarMenu]
+    tags:
+      - { name: knp_menu.menu, alias: sidebar }
