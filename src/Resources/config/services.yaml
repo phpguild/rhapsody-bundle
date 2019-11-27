@@ -12,3 +12,8 @@ services:
     factory: ['@PhpGuild\RhapsodyBundle\Menu\MenuBuilder', createSidebarMenu]
     tags:
       - { name: knp_menu.menu, alias: sidebar }
+
+  PhpGuild\RhapsodyBundle\EventListener\UserSecurityListener:
+    tags:
+      - { name: doctrine.event_listener, event: prePersist }
+
