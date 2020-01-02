@@ -6,7 +6,7 @@ use Gedmo\Timestampable\Traits\Timestampable;
 use PhpGuild\RhapsodyBundle\Doctrine\UuidTrait;
 
 /**
- * Class User
+ * Class AdminUser
  */
 abstract class AdminUser implements UserSecurityInterface
 {
@@ -23,6 +23,9 @@ abstract class AdminUser implements UserSecurityInterface
     private $username;
 
     /** @var string */
+    private $email;
+
+    /** @var string */
     private $password;
 
     /** @var string */
@@ -37,7 +40,7 @@ abstract class AdminUser implements UserSecurityInterface
     /**
      * __toString
      *
-     * @return mixed
+     * @return string
      */
     public function __toString(): string
     {
@@ -58,8 +61,7 @@ abstract class AdminUser implements UserSecurityInterface
      * setFirstName
      *
      * @param string $firstName
-     *
-     * @return $this
+     * @return UserSecurityInterface
      */
     public function setFirstName(string $firstName): UserSecurityInterface
     {
@@ -82,8 +84,7 @@ abstract class AdminUser implements UserSecurityInterface
      * setLastName
      *
      * @param string $lastName
-     *
-     * @return $this
+     * @return UserSecurityInterface
      */
     public function setLastName(string $lastName): UserSecurityInterface
     {
@@ -99,19 +100,53 @@ abstract class AdminUser implements UserSecurityInterface
      */
     public function getUsername(): ?string
     {
-        return $this->username;
+        if ($this->username) {
+            return $this->username;
+        }
+
+        if (!$this->lastName) {
+            return $this->firstName;
+        }
+
+        if ($this->firstName) {
+            return strtoupper($this->firstName[0] . $this->lastName[0]);
+        }
+
+        return null;
     }
 
     /**
      * setUsername
      *
      * @param string $username
-     *
-     * @return $this
+     * @return UserSecurityInterface
      */
     public function setUsername(string $username): UserSecurityInterface
     {
         $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * getEmail
+     *
+     * @return string|null
+     */
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    /**
+     * setEmail
+     *
+     * @param string $email
+     * @return UserSecurityInterface
+     */
+    public function setEmail(string $email): UserSecurityInterface
+    {
+        $this->email = $email;
 
         return $this;
     }
@@ -224,10 +259,11 @@ abstract class AdminUser implements UserSecurityInterface
     public function serialize(): string
     {
         return serialize([
-            $this->id,
-            $this->username,
-            $this->password,
-            $this->salt,
+            $this->getId(),
+            $this->getUsername(),
+            $this->getEmail(),
+            $this->getPassword(),
+            $this->getSalt(),
         ]);
     }
 
@@ -235,7 +271,6 @@ abstract class AdminUser implements UserSecurityInterface
      * unserialize
      *
      * @param string $serialized
-     *
      * @return array
      */
     public function unserialize($serialized): array
@@ -243,6 +278,7 @@ abstract class AdminUser implements UserSecurityInterface
         return [
             $this->id,
             $this->username,
+            $this->email,
             $this->password,
             $this->salt
         ] = unserialize($serialized, [ 'allowed_classes' => false ]);

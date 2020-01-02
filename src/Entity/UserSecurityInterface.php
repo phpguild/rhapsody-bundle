@@ -51,6 +51,22 @@ interface UserSecurityInterface extends UserInterface, \Serializable
     public function setUsername(string $username): self;
 
     /**
+     * getEmail
+     *
+     * @return string
+     */
+    public function getEmail(): ?string;
+
+    /**
+     * setEmail
+     *
+     * @param string $email
+     *
+     * @return UserSecurityInterface
+     */
+    public function setEmail(string $email): UserSecurityInterface;
+
+    /**
      * setPassword
      *
      * @param string $password

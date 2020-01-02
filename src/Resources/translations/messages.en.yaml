@@ -1,0 +1,10 @@
+rhapsody:
+  ui:
+    login: Log in
+    dashboard: Dashboard
+    login_message: Sign in to start your session
+    signin: Sign In
+    remember_me: Remember Me
+    email: Email
+    password: Password
+    version: Version

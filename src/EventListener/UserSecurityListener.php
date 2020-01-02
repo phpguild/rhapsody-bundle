@@ -34,12 +34,12 @@ class UserSecurityListener
             return;
         }
 
-        if ($user->getPlainPassword()) {
-            $user->setPassword($this->userPasswordEncoder->encodePassword($user, $user->getPlainPassword()));
-        }
-
         if (!$user->getSalt()) {
             $user->setSalt(hash('sha256', microtime() . uniqid('', true)));
+        }
+
+        if ($user->getPlainPassword()) {
+            $user->setPassword($this->userPasswordEncoder->encodePassword($user, $user->getPlainPassword()));
         }
     }
 }

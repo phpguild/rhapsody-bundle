@@ -4,34 +4,40 @@ namespace PhpGuild\RhapsodyBundle\Menu;
 
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
+use PhpGuild\RhapsodyBundle\Provider\RouterProvider;
 
 /**
  * Class MenuBuilder
  */
 class MenuBuilder
 {
+    /** @var RouterProvider $routerProvider */
+    private $routerProvider;
+
+    /** @var FactoryInterface $factory */
     private $factory;
 
     /**
      * MenuBuilder constructor.
+     *
+     * @param RouterProvider $routerProvider
      * @param FactoryInterface $factory
      */
-    public function __construct(FactoryInterface $factory)
+    public function __construct(RouterProvider $routerProvider, FactoryInterface $factory)
     {
+        $this->routerProvider = $routerProvider;
         $this->factory = $factory;
     }
 
     /**
-     * @param RequestStack $requestStack
      * @return ItemInterface
      */
-    public function createSidebarMenu(RequestStack $requestStack): ItemInterface
+    public function createSidebarMenu(): ItemInterface
     {
         $menu = $this->factory->createItem('root');
 
-        $menu->addChild('ui.dashboard', [
-            'route' => 'frontend_dashboard',
+        $menu->addChild('rhapsody.ui.dashboard', [
+            'route' => $this->routerProvider->getRoute('dashboard'),
         ])->setExtra('icon', 'fas fa-th');
 
         return $menu;

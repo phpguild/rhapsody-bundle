@@ -3,13 +3,17 @@ services:
     autowire: true
     autoconfigure: true
 
+  PhpGuild\RhapsodyBundle\Action\:
+      resource: ../../Action
+      tags: [ controller.service_arguments ]
+
   PhpGuild\RhapsodyBundle\:
     resource: '../../*'
     exclude: '../../{DependencyInjection,RhapsodyBundle.php}'
 
   rhapsody.sidebar_menu:
     class: Knp\Menu\MenuItem
-    factory: ['@PhpGuild\RhapsodyBundle\Menu\MenuBuilder', createSidebarMenu]
+    factory: [ '@PhpGuild\RhapsodyBundle\Menu\MenuBuilder', createSidebarMenu ]
     tags:
       - { name: knp_menu.menu, alias: sidebar }
 
@@ -17,3 +21,5 @@ services:
     tags:
       - { name: doctrine.event_listener, event: prePersist }
 
+  Symfony\Bundle\SecurityBundle\Security\FirewallMap:
+    alias: security.firewall.map
