@@ -1,0 +1,4 @@
+admin_dashboard:
+  path: /
+  methods: [ GET ]
+  controller: PhpGuild\RhapsodyBundle\Action\DashboardAction::__invoke

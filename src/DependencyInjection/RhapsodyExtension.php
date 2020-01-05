@@ -21,5 +21,8 @@ class RhapsodyExtension extends Extension
     {
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yaml');
+
+        $configuration = new Configuration();
+        $container->setParameter('rhapsody', $this->processConfiguration($configuration, $configs));
     }
 }

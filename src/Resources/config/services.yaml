@@ -9,7 +9,7 @@ services:
 
   PhpGuild\RhapsodyBundle\:
     resource: '../../*'
-    exclude: '../../{DependencyInjection,RhapsodyBundle.php}'
+    exclude: '../../{Composer,DependencyInjection,RhapsodyBundle.php}'
 
   rhapsody.sidebar_menu:
     class: Knp\Menu\MenuItem

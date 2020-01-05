@@ -4,7 +4,7 @@ namespace App\Repository;
 
 use App\Entity\AdminUser;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * Class AdminUserRepository
@@ -12,7 +12,7 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 class AdminUserRepository extends ServiceEntityRepository
 {
     /**
-     * UserRepository constructor.
+     * AdminUserRepository constructor.
      *
      * @param ManagerRegistry $registry
      */

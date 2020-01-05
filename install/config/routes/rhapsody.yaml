@@ -1,0 +1,3 @@
+rhapsody:
+  resource: rhapsody/*
+  prefix: /admin

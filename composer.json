@@ -19,5 +19,8 @@
     "psr-4": {
       "PhpGuild\\RhapsodyBundle\\": "src/"
     }
+  },
+  "scripts": {
+    "post-package-install": "PhpGuild\\RhapsodyBundle\\Composer\\Installer::postPackageInstall"
   }
 }
