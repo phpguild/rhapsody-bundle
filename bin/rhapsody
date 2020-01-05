@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+vendor_path=$(dirname $(dirname $(readlink -f "$0")))
+install_path="${vendor_path}/phpguild/rhapsody-bundle/install"
+project_path="$(pwd)"
+action="${1}"
+
+if [[ "install" = "${action}" ]]; then
+    echo "Install"
+    cp -fr -v ${install_path}/* "${project_path}"
+fi

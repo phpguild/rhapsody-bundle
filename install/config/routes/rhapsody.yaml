@@ -1,3 +1,3 @@
-rhapsody:
-  resource: rhapsody/*
+rhapsody_admin:
+  resource: rhapsody/admin/*
   prefix: /admin

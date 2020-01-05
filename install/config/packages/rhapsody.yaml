@@ -1,4 +1,2 @@
-rhapsody:
-  contexts:
-    admin:
-      theme: RhapsodyAdminLte
+imports:
+  - { resource: rhapsody/admin.yaml }

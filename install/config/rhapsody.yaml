@@ -1,0 +1,8 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  App\Action\Admin\:
+    resource: ../src/Action/Admin
+    tags: [ controller.service_arguments ]

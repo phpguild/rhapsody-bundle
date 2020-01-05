@@ -1,0 +1,4 @@
+rhapsody:
+  contexts:
+    admin:
+      theme: RhapsodyAdminLte

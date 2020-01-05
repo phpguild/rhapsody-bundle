@@ -1,0 +1,6 @@
+App\Entity\AdminUser:
+  admin_user_01:
+    firstName: Admin
+    lastName: TEST
+    email: admin@email.test
+    plainPassword: admin

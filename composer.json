@@ -20,7 +20,5 @@
       "PhpGuild\\RhapsodyBundle\\": "src/"
     }
   },
-  "scripts": {
-    "post-package-install": "PhpGuild\\RhapsodyBundle\\Composer\\Installer::postPackageInstall"
-  }
+  "bin": [ "bin/rhapsody" ]
 }
