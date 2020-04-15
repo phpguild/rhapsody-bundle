@@ -3,10 +3,10 @@
 namespace PhpGuild\RhapsodyBundle\Provider;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Bundle\SecurityBundle\Security\FirewallMap;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Twig\Environment;
 
 /**
  * Class ThemeProvider
@@ -16,7 +16,7 @@ class ThemeProvider
     /** @var Request $request */
     private $request;
 
-    /** @var EngineInterface $twig */
+    /** @var Environment $twig */
     private $twig;
 
     /** @var FirewallMap $firewallMap */
@@ -28,13 +28,13 @@ class ThemeProvider
     /**
      * ThemeProvider constructor.
      * @param RequestStack $requestStack
-     * @param EngineInterface $twig
+     * @param Environment $twig
      * @param FirewallMap $firewallMap
      * @param ParameterBagInterface $parameterBag
      */
     public function __construct(
         RequestStack $requestStack,
-        EngineInterface $twig,
+        Environment $twig,
         FirewallMap $firewallMap,
         ParameterBagInterface $parameterBag
     ) {

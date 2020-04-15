@@ -2,7 +2,7 @@
 
 namespace PhpGuild\RhapsodyBundle\Entity;
 
-use Gedmo\Timestampable\Traits\Timestampable;
+use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 use PhpGuild\RhapsodyBundle\Doctrine\UuidTrait;
 
 /**
@@ -11,7 +11,7 @@ use PhpGuild\RhapsodyBundle\Doctrine\UuidTrait;
 abstract class AdminUser implements UserSecurityInterface
 {
     use UuidTrait;
-    use Timestampable;
+    use TimestampableTrait;
 
     /** @var null|string */
     private $firstName;
