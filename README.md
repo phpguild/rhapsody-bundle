@@ -4,6 +4,10 @@ This bundle allows the creation of simple and fast administration for Symfony 4 
 
 ## Installation
 
+Install with composer
+
+    composer req phpguild/rhapsody-bundle
+    
 Execute install script
 
     vendor/bin/rhapsody install
