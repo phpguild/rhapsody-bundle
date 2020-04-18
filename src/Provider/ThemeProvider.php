@@ -66,7 +66,7 @@ class ThemeProvider
         }
 
         $view = sprintf('%s/%s', $contextName, $view);
-        if (!$this->twig->exists($view)) {
+        if (!$this->twig->getLoader()->exists($view)) {
             $view = sprintf('@%s/%s', $theme, $view);
         }
 

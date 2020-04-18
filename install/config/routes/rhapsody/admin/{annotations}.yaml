@@ -1,2 +1,3 @@
 admin_annotations:
-  resource: ../../src/Action/Admin
+  resource: ../../../../src/Action/Admin
+  type: annotation
