@@ -1,4 +1,4 @@
 rhapsody:
   contexts:
     admin:
-      theme: RhapsodyAdminLte
+      theme: '@RhapsodyAdminLte'

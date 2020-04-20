@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PhpGuild\RhapsodyBundle\Twig;
 
 use PhpGuild\RhapsodyBundle\Provider\RouterProvider;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PhpGuild\RhapsodyBundle\Provider;
 
 use Symfony\Bundle\SecurityBundle\Security\FirewallMap;

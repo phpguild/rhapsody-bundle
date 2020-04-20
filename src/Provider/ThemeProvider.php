@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PhpGuild\RhapsodyBundle\Provider;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -47,27 +49,31 @@ class ThemeProvider
     /**
      * getView
      *
-     * @param string $view
+     * @param string $originalView
+     *
      * @return string
      * @throws ThemeProviderException
      */
-    public function getView(string $view): string
+    public function getView(string $originalView): string
     {
         $context = $this->firewallMap->getFirewallConfig($this->request);
         if (!$context) {
-            throw new ThemeProviderException();
+            throw new ThemeProviderException('Firewall context is not configured', 1001);
         }
 
         $contextName = $context->getName();
         $configuration = $this->parameterBag->get('rhapsody');
         $theme = $configuration['contexts'][$contextName]['theme'] ?? null;
         if (!$theme) {
-            throw new ThemeProviderException();
+            throw new ThemeProviderException(sprintf(
+                '%s parameter is not configured',
+                'rhapsody.contexts.' . $contextName . '.theme'
+            ), 1002);
         }
 
-        $view = sprintf('%s/%s', $contextName, $view);
+        $view = sprintf('%s/%s', $contextName, $originalView);
         if (!$this->twig->getLoader()->exists($view)) {
-            $view = sprintf('@%s/%s', $theme, $view);
+            $view = sprintf('@%s/%s', ltrim($theme, '@'), $originalView);
         }
 
         return $view;

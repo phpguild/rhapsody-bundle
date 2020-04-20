@@ -1,7 +1,7 @@
 {
   "name": "phpguild/rhapsody-bundle",
   "description": "This bundle allows the creation of simple and fast administration for Symfony 4 and 5.",
-  "type": "bundle",
+  "type": "symfony-bundle",
   "license": "GPL-3.0",
   "authors": [
     {
@@ -11,8 +11,8 @@
   ],
   "require": {
     "php": ">=7.1",
-    "knplabs/doctrine-behaviors": "^2.0",
     "knplabs/knp-menu-bundle": "^3.0",
+    "phpguild/doctrine-extra-bundle": "dev-master",
     "sensio/framework-extra-bundle": "^5.1",
     "symfony/asset": "*",
     "symfony/console": "*",
@@ -24,7 +24,6 @@
     "symfony/lock": "*",
     "symfony/mailer": "*",
     "symfony/monolog-bundle": "^3.1",
-    "symfony/orm-pack": "*",
     "symfony/process": "*",
     "symfony/property-access": "*",
     "symfony/security-bundle": "*",
