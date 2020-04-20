@@ -7,6 +7,7 @@ namespace PhpGuild\RhapsodyBundle\Menu;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 use PhpGuild\RhapsodyBundle\Provider\RouterProvider;
+use PhpGuild\RhapsodyBundle\Provider\ThemeProviderException;
 
 /**
  * Class MenuBuilder
@@ -32,7 +33,10 @@ class MenuBuilder
     }
 
     /**
+     * createSidebarMenu
+     *
      * @return ItemInterface
+     * @throws ThemeProviderException
      */
     public function createSidebarMenu(): ItemInterface
     {
