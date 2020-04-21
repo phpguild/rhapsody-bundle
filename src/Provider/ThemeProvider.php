@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace PhpGuild\RhapsodyBundle\Provider;
 
-use PhpGuild\RhapsodyBundle\Configuration\ConfigurationHandler;
+use PhpGuild\RhapsodyBundle\Configuration\ConfigurationManager;
 use Twig\Environment;
 
 /**
@@ -15,21 +15,21 @@ class ThemeProvider
     /** @var Environment $twig */
     private $twig;
 
-    /** @var ConfigurationHandler $configurationHandler */
-    private $configurationHandler;
+    /** @var ConfigurationManager $configurationManager */
+    private $configurationManager;
 
     /**
      * ThemeProvider constructor.
      *
      * @param Environment          $twig
-     * @param ConfigurationHandler $configurationHandler
+     * @param ConfigurationManager $configurationManager
      */
     public function __construct(
         Environment $twig,
-        ConfigurationHandler $configurationHandler
+        ConfigurationManager $configurationManager
     ) {
         $this->twig = $twig;
-        $this->configurationHandler = $configurationHandler;
+        $this->configurationManager = $configurationManager;
     }
 
     /**
@@ -38,20 +38,13 @@ class ThemeProvider
      * @param string $originalView
      *
      * @return string
-     * @throws ThemeProviderException
      */
     public function getView(string $originalView): string
     {
-        $contextName = $this->configurationHandler->getCurrentContextName();
-        $theme = $this->configurationHandler->getCurrentContext()['theme'];
-        if (!$theme) {
-            throw new ThemeProviderException(sprintf(
-                '%s parameter is not configured',
-                'rhapsody.contexts.' . $contextName . '.theme'
-            ), 1002);
-        }
+        $context = $this->configurationManager->getContext();
+        $theme = $this->configurationManager->getTheme();
 
-        $view = sprintf('%s/%s', $contextName, $originalView);
+        $view = sprintf('%s/%s', $context, $originalView);
         if (!$this->twig->getLoader()->exists($view)) {
             $view = sprintf('@%s/%s', ltrim($theme, '@'), $originalView);
         }

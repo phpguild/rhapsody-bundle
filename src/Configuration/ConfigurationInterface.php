@@ -12,11 +12,12 @@ interface ConfigurationInterface
     /**
      * build
      *
-     * @param array $configurationData
+     * @param string $context
+     * @param array  $configurationData
      *
      * @return array
      */
-    public function build(array $configurationData): array;
+    public function build(string $context, array $configurationData): array;
 
     /**
      * isBuild

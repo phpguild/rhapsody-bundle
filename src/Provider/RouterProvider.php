@@ -4,48 +4,36 @@ declare(strict_types=1);
 
 namespace PhpGuild\RhapsodyBundle\Provider;
 
-use Symfony\Bundle\SecurityBundle\Security\FirewallMap;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
+use PhpGuild\RhapsodyBundle\Configuration\ConfigurationManager;
 
 /**
  * Class RouterProvider
  */
 class RouterProvider
 {
-    /** @var Request $request */
-    private $request;
-
-    /** @var FirewallMap $firewallMap */
-    private $firewallMap;
+    /** @var ConfigurationManager $configurationManager */
+    private $configurationManager;
 
     /**
      * RouterProvider constructor.
-     * @param RequestStack $requestStack
-     * @param FirewallMap $firewallMap
+     *
+     * @param ConfigurationManager $configurationManager
      */
-    public function __construct(RequestStack $requestStack, FirewallMap $firewallMap)
+    public function __construct(ConfigurationManager $configurationManager)
     {
-        $this->request = $requestStack->getCurrentRequest();
-        $this->firewallMap = $firewallMap;
+        $this->configurationManager = $configurationManager;
     }
 
     /**
      * getRoute
      *
      * @param string $route
+     *
      * @return string
      * @throws ThemeProviderException
      */
     public function getRoute(string $route): string
     {
-        $context = $this->firewallMap->getFirewallConfig($this->request);
-        if (!$context) {
-            throw new ThemeProviderException();
-        }
-
-        $contextName = $context->getName();
-
-        return sprintf('%s_%s', $contextName, $route);
+        return sprintf('%s_%s', $this->configurationManager->getContext(), $route);
     }
 }
