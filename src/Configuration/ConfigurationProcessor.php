@@ -4,16 +4,21 @@ declare(strict_types=1);
 
 namespace PhpGuild\RhapsodyBundle\Configuration;
 
+use PhpGuild\RhapsodyBundle\Configuration\Model\Resource\ResourceCollection;
+use PhpGuild\RhapsodyBundle\Configuration\Transformer\ResourceTransformer;
 use PhpGuild\RhapsodyBundle\Provider\ThemeProviderException;
 use Psr\Cache\InvalidArgumentException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Contracts\Cache\CacheInterface;
 
 /**
- * Class ConfigurationHandler
+ * Class ConfigurationProcessor
  */
-final class ConfigurationHandler
+final class ConfigurationProcessor
 {
+    /** @var ResourceTransformer $resourceTransformer */
+    private $resourceTransformer;
+
     /** @var CacheInterface $cache */
     private $cache;
 
@@ -23,31 +28,21 @@ final class ConfigurationHandler
     /** @var array $originalConfiguration */
     private $originalConfiguration;
 
-    /** @var array $collection */
-    private $collection = [];
-
     /**
-     * ConfigurationHandler constructor.
+     * ConfigurationProcessor constructor.
      *
+     * @param ResourceTransformer   $resourceTransformer
      * @param CacheInterface        $cache
      * @param ParameterBagInterface $parameterBag
      */
     public function __construct(
+        ResourceTransformer $resourceTransformer,
         CacheInterface $cache,
         ParameterBagInterface $parameterBag
     ) {
-        $this->originalConfiguration = $parameterBag->get('rhapsody');
+        $this->resourceTransformer = $resourceTransformer;
         $this->cache = $cache;
-    }
-
-    /**
-     * addConfiguration
-     *
-     * @param ConfigurationInterface $configuration
-     */
-    public function addConfiguration(ConfigurationInterface $configuration): void
-    {
-        $this->collection[get_class($configuration)] = $configuration;
+        $this->originalConfiguration = $parameterBag->get('rhapsody');
     }
 
     /**
@@ -67,26 +62,17 @@ final class ConfigurationHandler
             $cacheKey = sprintf('rhapsody.configuration.%s', $context);
 
             $this->configuration[$context] = $this->cache->get($cacheKey, function () use ($context, $configuration) {
-                $configuration = $this->collection[ResourceConfiguration::class]->build($context, $configuration);
-                $configuration = $this->collection[ResourceActionsConfiguration::class]->build($context, $configuration);
+                /** @var ResourceCollection $resourceCollection */
+                $resourceCollection = $this->resourceTransformer->transform($context, $configuration);
 
-                /** @var ConfigurationInterface $configurator */
-                foreach ($this->collection as $configurator) {
-                    if ($configurator->isBuild()) {
-                        continue;
-                    }
-
-                    $configuration = $configurator->build($context, $configuration);
-                }
-
-                if (empty($configuration['theme'])) {
+                if (!$resourceCollection->getTheme()) {
                     throw new ThemeProviderException(sprintf(
                         '%s parameter is not configured',
                         'rhapsody.contexts.' . $context . '.theme'
                     ), 1002);
                 }
-
-                return $configuration;
+dump($resourceCollection);exit;
+                return $resourceCollection;
             });
         }
     }
@@ -106,9 +92,9 @@ final class ConfigurationHandler
      *
      * @param string $context
      *
-     * @return array|null
+     * @return ResourceCollection|null
      */
-    public function getContextConfiguration(string $context): ?array
+    public function getContextConfiguration(string $context): ?ResourceCollection
     {
         return $this->configuration[$context] ?? null;
     }

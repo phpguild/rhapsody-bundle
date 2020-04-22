@@ -8,9 +8,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class ListAction
+ * Class CreateAction
  */
-class ListAction extends AbstractController
+class CreateAction extends AbstractController
 {
     /**
      * __invoke
@@ -19,6 +19,6 @@ class ListAction extends AbstractController
      */
     public function __invoke(): Response
     {
-        return new Response('ListAction');
+        return new Response('CreateAction');
     }
 }

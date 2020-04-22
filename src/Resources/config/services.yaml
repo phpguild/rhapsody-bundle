@@ -11,9 +11,6 @@ services:
       resource: ../../Action
       tags: [ controller.service_arguments ]
 
-  PhpGuild\RhapsodyBundle\Router\RhapsodyLoader:
-    tags: [ routing.loader ]
-
   rhapsody.sidebar_menu:
     class: Knp\Menu\MenuItem
     factory: [ '@PhpGuild\RhapsodyBundle\Menu\MenuBuilder', createSidebarMenu ]

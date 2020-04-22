@@ -2,7 +2,7 @@
 
 namespace PhpGuild\RhapsodyBundle\Router;
 
-use PhpGuild\RhapsodyBundle\Configuration\ConfigurationHandler;
+use PhpGuild\RhapsodyBundle\Configuration\ConfigurationProcessor;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Loader\LoaderResolverInterface;
 use Symfony\Component\Routing\Route;
@@ -13,8 +13,8 @@ use Symfony\Component\Routing\RouteCollection;
  */
 class RhapsodyLoader implements LoaderInterface
 {
-    /** @var ConfigurationHandler $configurationHandler */
-    private $configurationHandler;
+    /** @var ConfigurationProcessor $configurationProcessor */
+    private $configurationProcessor;
 
     /** @var bool $loaded */
     private $loaded = false;
@@ -22,11 +22,11 @@ class RhapsodyLoader implements LoaderInterface
     /**
      * RhapsodyLoader constructor.
      *
-     * @param ConfigurationHandler $configurationHandler
+     * @param ConfigurationProcessor $configurationProcessor
      */
-    public function __construct(ConfigurationHandler $configurationHandler)
+    public function __construct(ConfigurationProcessor $configurationProcessor)
     {
-        $this->configurationHandler = $configurationHandler;
+        $this->configurationProcessor = $configurationProcessor;
     }
 
     /**
@@ -45,7 +45,7 @@ class RhapsodyLoader implements LoaderInterface
 
         $routes = new RouteCollection();
 
-        foreach ($this->configurationHandler->getConfiguration() as $context => $contextConfiguration) {
+        foreach ($this->configurationProcessor->getConfiguration() as $context => $contextConfiguration) {
             foreach ($contextConfiguration['resources'] as $resourceConfiguration) {
                 foreach ($resourceConfiguration['actions'] as $action => $actionConfiguration) {
                     $routes->add($actionConfiguration['routeName'], new Route($actionConfiguration['routePath'], [

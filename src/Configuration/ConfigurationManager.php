@@ -20,8 +20,8 @@ final class ConfigurationManager
     /** @var Request $request */
     private $request;
 
-    /** @var ConfigurationHandler $configurationHandler */
-    private $configurationHandler;
+    /** @var ConfigurationProcessor $configurationProcessor */
+    private $configurationProcessor;
 
     /** @var array $configuration */
     private $configuration;
@@ -34,16 +34,16 @@ final class ConfigurationManager
      *
      * @param FirewallMap          $firewallMap
      * @param RequestStack         $requestStack
-     * @param ConfigurationHandler $configurationHandler
+     * @param ConfigurationProcessor $configurationProcessor
      */
     public function __construct(
         FirewallMap $firewallMap,
         RequestStack $requestStack,
-        ConfigurationHandler $configurationHandler
+        ConfigurationProcessor $configurationProcessor
     ) {
         $this->firewallMap = $firewallMap;
         $this->request = $requestStack->getCurrentRequest();
-        $this->configurationHandler = $configurationHandler;
+        $this->configurationProcessor = $configurationProcessor;
     }
 
     /**
@@ -76,7 +76,7 @@ final class ConfigurationManager
     public function getConfiguration(): array
     {
         if (!$this->configuration) {
-            $this->configuration = $this->configurationHandler->getContextConfiguration($this->getContext());
+            $this->configuration = $this->configurationProcessor->getContextConfiguration($this->getContext());
 
             if (!$this->configuration) {
                 throw new ThemeProviderException('Context is not configured', 1001);
