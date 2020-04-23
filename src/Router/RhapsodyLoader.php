@@ -2,10 +2,12 @@
 
 namespace PhpGuild\RhapsodyBundle\Router;
 
-use PhpGuild\RhapsodyBundle\Configuration\ConfigurationProcessor;
-use PhpGuild\RhapsodyBundle\Configuration\Model\Action\ActionInterface;
-use PhpGuild\RhapsodyBundle\Configuration\Model\Resource\ResourceCollectionInterface;
-use PhpGuild\RhapsodyBundle\Configuration\Model\Resource\ResourceElementInterface;
+use PhpGuild\ResourceBundle\Configuration\ConfigurationException;
+use PhpGuild\ResourceBundle\Model\Action\ActionInterface;
+use PhpGuild\ResourceBundle\Model\Resource\ResourceCollectionInterface;
+use PhpGuild\ResourceBundle\Model\Resource\ResourceElementInterface;
+use PhpGuild\RhapsodyBundle\Configuration\RhapsodyConfigurationProcessor;
+use Psr\Cache\InvalidArgumentException;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Loader\LoaderResolverInterface;
 use Symfony\Component\Routing\Route;
@@ -16,7 +18,7 @@ use Symfony\Component\Routing\RouteCollection;
  */
 class RhapsodyLoader implements LoaderInterface
 {
-    /** @var ConfigurationProcessor $configurationProcessor */
+    /** @var RhapsodyConfigurationProcessor $configurationProcessor */
     private $configurationProcessor;
 
     /** @var bool $loaded */
@@ -25,9 +27,9 @@ class RhapsodyLoader implements LoaderInterface
     /**
      * RhapsodyLoader constructor.
      *
-     * @param ConfigurationProcessor $configurationProcessor
+     * @param RhapsodyConfigurationProcessor $configurationProcessor
      */
-    public function __construct(ConfigurationProcessor $configurationProcessor)
+    public function __construct(RhapsodyConfigurationProcessor $configurationProcessor)
     {
         $this->configurationProcessor = $configurationProcessor;
     }
@@ -39,6 +41,9 @@ class RhapsodyLoader implements LoaderInterface
      * @param string|null $type
      *
      * @return RouteCollection
+     *
+     * @throws ConfigurationException
+     * @throws InvalidArgumentException
      */
     public function load($resource, string $type = null): RouteCollection
     {

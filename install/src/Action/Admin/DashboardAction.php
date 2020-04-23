@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Action\Admin;
 
+use PhpGuild\ResourceBundle\Configuration\ConfigurationException;
 use PhpGuild\RhapsodyBundle\Provider\ThemeProvider;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class DashboardAction
@@ -32,9 +33,11 @@ class DashboardAction extends AbstractController
      * __invoke
      *
      * @Route("/", name="admin_dashboard")
+     *
      * @param Request $request
+     *
      * @return Response
-     * @throws \PhpGuild\RhapsodyBundle\Provider\ThemeProviderException
+     * @throws ConfigurationException
      */
     public function __invoke(Request $request): Response
     {

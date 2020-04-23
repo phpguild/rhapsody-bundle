@@ -5,7 +5,7 @@ services:
 
   PhpGuild\RhapsodyBundle\:
     resource: '../../*'
-    exclude: '../../{DependencyInjection,RhapsodyBundle.php}'
+    exclude: '../../{DependencyInjection,Resources,RhapsodyBundle.php}'
 
   PhpGuild\RhapsodyBundle\Action\:
       resource: ../../Action
@@ -14,11 +14,14 @@ services:
   PhpGuild\RhapsodyBundle\Router\RhapsodyLoader:
     tags: [ routing.loader ]
 
+  PhpGuild\RhapsodyBundle\Configuration\RhapsodyConfigurationProcessor:
+    arguments: [ '%rhapsody%' ]
+
+  PhpGuild\RhapsodyBundle\Configuration\RhapsodyConfigurationManager:
+    arguments: [ '@PhpGuild\RhapsodyBundle\Configuration\RhapsodyConfigurationProcessor' ]
+
   rhapsody.sidebar_menu:
     class: Knp\Menu\MenuItem
     factory: [ '@PhpGuild\RhapsodyBundle\Menu\MenuBuilder', createSidebarMenu ]
     tags:
       - { name: knp_menu.menu, alias: sidebar }
-
-  Symfony\Bundle\SecurityBundle\Security\FirewallMap:
-    alias: security.firewall.map

@@ -1,2 +1,2 @@
 imports:
-  - { resource: rhapsody/admin.yaml }
+  - { resource: rhapsody/ }

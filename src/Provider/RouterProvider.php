@@ -4,22 +4,23 @@ declare(strict_types=1);
 
 namespace PhpGuild\RhapsodyBundle\Provider;
 
-use PhpGuild\RhapsodyBundle\Configuration\ConfigurationManager;
+use PhpGuild\ResourceBundle\Configuration\ConfigurationException;
+use PhpGuild\RhapsodyBundle\Configuration\RhapsodyConfigurationManager;
 
 /**
  * Class RouterProvider
  */
 class RouterProvider
 {
-    /** @var ConfigurationManager $configurationManager */
+    /** @var RhapsodyConfigurationManager $configurationManager */
     private $configurationManager;
 
     /**
      * RouterProvider constructor.
      *
-     * @param ConfigurationManager $configurationManager
+     * @param RhapsodyConfigurationManager $configurationManager
      */
-    public function __construct(ConfigurationManager $configurationManager)
+    public function __construct(RhapsodyConfigurationManager $configurationManager)
     {
         $this->configurationManager = $configurationManager;
     }
@@ -30,7 +31,7 @@ class RouterProvider
      * @param string $route
      *
      * @return string
-     * @throws ThemeProviderException
+     * @throws ConfigurationException
      */
     public function getRoute(string $route): string
     {

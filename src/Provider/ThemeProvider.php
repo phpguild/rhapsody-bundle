@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace PhpGuild\RhapsodyBundle\Provider;
 
-use PhpGuild\RhapsodyBundle\Configuration\ConfigurationManager;
+use PhpGuild\ResourceBundle\Configuration\ConfigurationException;
+use PhpGuild\RhapsodyBundle\Configuration\RhapsodyConfigurationManager;
 use Twig\Environment;
 
 /**
@@ -15,18 +16,18 @@ class ThemeProvider
     /** @var Environment $twig */
     private $twig;
 
-    /** @var ConfigurationManager $configurationManager */
+    /** @var RhapsodyConfigurationManager $configurationManager */
     private $configurationManager;
 
     /**
      * ThemeProvider constructor.
      *
      * @param Environment          $twig
-     * @param ConfigurationManager $configurationManager
+     * @param RhapsodyConfigurationManager $configurationManager
      */
     public function __construct(
         Environment $twig,
-        ConfigurationManager $configurationManager
+        RhapsodyConfigurationManager $configurationManager
     ) {
         $this->twig = $twig;
         $this->configurationManager = $configurationManager;
@@ -38,7 +39,7 @@ class ThemeProvider
      * @param string $originalView
      *
      * @return string
-     * @throws ThemeProviderException
+     * @throws ConfigurationException
      */
     public function getView(string $originalView): string
     {

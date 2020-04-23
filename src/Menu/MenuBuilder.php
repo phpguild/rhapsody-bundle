@@ -6,9 +6,9 @@ namespace PhpGuild\RhapsodyBundle\Menu;
 
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
-use PhpGuild\RhapsodyBundle\Configuration\ConfigurationManager;
-use PhpGuild\RhapsodyBundle\Configuration\Model\Resource\ResourceElementInterface;
-use PhpGuild\RhapsodyBundle\Provider\ThemeProviderException;
+use PhpGuild\ResourceBundle\Configuration\ConfigurationException;
+use PhpGuild\ResourceBundle\Model\Resource\ResourceElementInterface;
+use PhpGuild\RhapsodyBundle\Configuration\RhapsodyConfigurationManager;
 
 /**
  * Class MenuBuilder
@@ -18,18 +18,18 @@ class MenuBuilder
     /** @var FactoryInterface $factory */
     private $factory;
 
-    /** @var ConfigurationManager $configurationManager */
+    /** @var RhapsodyConfigurationManager $configurationManager */
     private $configurationManager;
 
     /**
      * MenuBuilder constructor.
      *
      * @param FactoryInterface     $factory
-     * @param ConfigurationManager $configurationManager
+     * @param RhapsodyConfigurationManager $configurationManager
      */
     public function __construct(
         FactoryInterface $factory,
-        ConfigurationManager $configurationManager
+        RhapsodyConfigurationManager $configurationManager
     ) {
         $this->factory = $factory;
         $this->configurationManager = $configurationManager;
@@ -39,7 +39,7 @@ class MenuBuilder
      * createSidebarMenu
      *
      * @return ItemInterface
-     * @throws ThemeProviderException
+     * @throws ConfigurationException
      */
     public function createSidebarMenu(): ItemInterface
     {
