@@ -7,12 +7,12 @@ namespace PhpGuild\RhapsodyBundle\Configuration\Model\Resource;
 /**
  * Class ResourceCollection
  */
-class ResourceCollection
+class ResourceCollection implements ResourceCollectionInterface
 {
     /** @var string|null $label */
     protected $theme;
 
-    /** @var ResourceNormalizer[] $resources */
+    /** @var ResourceElement[] $resources */
     protected $resources = [];
 
     /**
@@ -30,9 +30,9 @@ class ResourceCollection
      *
      * @param string|null $theme
      *
-     * @return $this
+     * @return ResourceCollectionInterface|self
      */
-    public function setTheme(?string $theme): self
+    public function setTheme(?string $theme): ResourceCollectionInterface
     {
         $this->theme = $theme;
 
@@ -42,7 +42,7 @@ class ResourceCollection
     /**
      * getResources
      *
-     * @return ResourceNormalizer[]
+     * @return ResourceElementInterface[]
      */
     public function getResources(): array
     {
@@ -52,11 +52,11 @@ class ResourceCollection
     /**
      * setResources
      *
-     * @param ResourceNormalizer[] $resources
+     * @param ResourceElementInterface[] $resources
      *
-     * @return $this
+     * @return ResourceCollectionInterface|self
      */
-    public function setResources(array $resources): self
+    public function setResources(array $resources): ResourceCollectionInterface
     {
         $this->resources = $resources;
 

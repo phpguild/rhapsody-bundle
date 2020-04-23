@@ -8,9 +8,9 @@ use PhpGuild\RhapsodyBundle\Configuration\Model\Action\ActionInterface;
 use PhpGuild\RhapsodyBundle\Configuration\Model\Field\RouteInterface;
 
 /**
- * Interface ResourceNormalizerInterface
+ * Interface ResourceElementInterface
  */
-interface ResourceNormalizerInterface
+interface ResourceElementInterface
 {
     /**
      * getPrimaryRoute
@@ -24,9 +24,9 @@ interface ResourceNormalizerInterface
      *
      * @param RouteInterface|null $primaryRoute
      *
-     * @return ResourceNormalizerInterface|self
+     * @return ResourceElementInterface|self
      */
-    public function setPrimaryRoute(?RouteInterface $primaryRoute): ResourceNormalizerInterface;
+    public function setPrimaryRoute(?RouteInterface $primaryRoute): ResourceElementInterface;
 
     /**
      * getLabel
@@ -40,9 +40,9 @@ interface ResourceNormalizerInterface
      *
      * @param string|null $label
      *
-     * @return ResourceNormalizerInterface|self
+     * @return ResourceElementInterface|self
      */
-    public function setLabel(?string $label): ResourceNormalizerInterface;
+    public function setLabel(?string $label): ResourceElementInterface;
 
     /**
      * getIcon
@@ -56,9 +56,9 @@ interface ResourceNormalizerInterface
      *
      * @param string|null $icon
      *
-     * @return ResourceNormalizerInterface|self
+     * @return ResourceElementInterface|self
      */
-    public function setIcon(?string $icon): ResourceNormalizerInterface;
+    public function setIcon(?string $icon): ResourceElementInterface;
 
     /**
      * getActions
@@ -79,7 +79,7 @@ interface ResourceNormalizerInterface
      *
      * @param ActionInterface[] $actions
      *
-     * @return ResourceNormalizerInterface|self
+     * @return ResourceElementInterface|self
      */
-    public function setActions(array $actions): ResourceNormalizerInterface;
+    public function setActions(array $actions): ResourceElementInterface;
 }

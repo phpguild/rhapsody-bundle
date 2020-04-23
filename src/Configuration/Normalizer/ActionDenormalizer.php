@@ -9,9 +9,9 @@ use Symfony\Component\Serializer\Normalizer\ContextAwareDenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 /**
- * Class ActionNormalizer
+ * Class ActionDenormalizer
  */
-class ActionNormalizer implements ContextAwareDenormalizerInterface
+class ActionDenormalizer implements ContextAwareDenormalizerInterface
 {
     /** @var ObjectNormalizer $normalizer */
     private $normalizer;
@@ -20,9 +20,9 @@ class ActionNormalizer implements ContextAwareDenormalizerInterface
     private $actionModelHandler;
 
     /**
-     * ActionNormalizer constructor.
+     * ActionDenormalizer constructor.
      *
-     * @param ObjectNormalizer        $normalizer
+     * @param ObjectNormalizer   $normalizer
      * @param ActionModelHandler $actionModelHandler
      */
     public function __construct(ObjectNormalizer $normalizer, ActionModelHandler $actionModelHandler)
@@ -39,23 +39,46 @@ class ActionNormalizer implements ContextAwareDenormalizerInterface
      * @param string|null $format
      * @param array       $context
      *
-     * @return array|\ArrayObject|bool|float|int|mixed|object|string|null
+     * @return array|object
      * @throws ExceptionInterface
+     * @throws DenormalizerException
      */
     public function denormalize($data, string $type, string $format = null, array $context = [])
     {
-        $actionNormalizer = $this->actionModelHandler->get($data['name']);
+        $actionClassName = $this->actionModelHandler->get($data['name']);
 
-        if (!$actionNormalizer) {
-            return null;
+        if (!$actionClassName) {
+            throw new DenormalizerException();
         }
 
-        return $this->normalizer->denormalize(
-            $data,
-            get_class($actionNormalizer),
-            $format,
-            $context
-        );
+        $data = array_merge([
+            'route' => [
+                'name' => sprintf('%s_%s_%s', $context['contextName'], $context['resourceName'], $data['name']),
+                'path' => sprintf('%s%s', $context['resourceName'], ('list' !== $data['name'] ? '/' . $data['name'] : '')),
+            ],
+        ], $data);
+
+        if (!isset($data['fields'])) {
+            $fields = $context['resourceMetadata']->getFieldNames();
+
+            if ('form' === $data['name']) {
+                $identifierIndex = array_search(
+                    $context['resourceMetadata']->getSingleIdentifierFieldName(),
+                    $fields,
+                    true
+                );
+
+                if (false !== $identifierIndex) {
+                    unset($fields[$identifierIndex]);
+                }
+            }
+
+            $data['fields'] = $fields;
+        }
+
+        return $this->normalizer->denormalize($data, get_class($actionClassName), $format, array_merge($context, [
+            'actionName' => $data['name'],
+        ]));
     }
 
     /**

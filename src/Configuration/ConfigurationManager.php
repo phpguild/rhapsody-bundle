@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace PhpGuild\RhapsodyBundle\Configuration;
 
+use PhpGuild\RhapsodyBundle\Configuration\Model\Resource\ResourceCollectionInterface;
 use PhpGuild\RhapsodyBundle\Provider\ThemeProviderException;
 use Symfony\Bundle\SecurityBundle\Security\FirewallMap;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,7 +24,7 @@ final class ConfigurationManager
     /** @var ConfigurationProcessor $configurationProcessor */
     private $configurationProcessor;
 
-    /** @var array $configuration */
+    /** @var ResourceCollectionInterface $configuration */
     private $configuration;
 
     /** @var string $context */
@@ -70,10 +71,10 @@ final class ConfigurationManager
     /**
      * getConfiguration
      *
-     * @return array
+     * @return ResourceCollectionInterface
      * @throws ThemeProviderException
      */
-    public function getConfiguration(): array
+    public function getConfiguration(): ResourceCollectionInterface
     {
         if (!$this->configuration) {
             $this->configuration = $this->configurationProcessor->getContextConfiguration($this->getContext());
@@ -84,27 +85,5 @@ final class ConfigurationManager
         }
 
         return $this->configuration;
-    }
-
-    /**
-     * getTheme
-     *
-     * @return string|null
-     * @throws ThemeProviderException
-     */
-    public function getTheme(): ?string
-    {
-        return $this->getConfiguration()['theme'] ?? null;
-    }
-
-    /**
-     * getResources
-     *
-     * @return array
-     * @throws ThemeProviderException
-     */
-    public function getResources(): array
-    {
-        return $this->getConfiguration()['resources'] ?? [];
     }
 }

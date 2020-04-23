@@ -7,6 +7,7 @@ namespace PhpGuild\RhapsodyBundle\Menu;
 use Knp\Menu\FactoryInterface;
 use Knp\Menu\ItemInterface;
 use PhpGuild\RhapsodyBundle\Configuration\ConfigurationManager;
+use PhpGuild\RhapsodyBundle\Configuration\Model\Resource\ResourceElementInterface;
 use PhpGuild\RhapsodyBundle\Provider\ThemeProviderException;
 
 /**
@@ -48,13 +49,19 @@ class MenuBuilder
             'route' => 'admin_dashboard',
         ])->setExtra('icon', 'fas fa-th');
 
-        foreach ($this->configurationManager->getResources() as $resource) {
-            $menuItem = $menu->addChild($resource['label'], [
-                'route' => $resource['primaryRouteName'],
+        /** @var ResourceElementInterface $resource */
+        foreach ($this->configurationManager->getConfiguration()->getResources() as $resource) {
+            $primaryRoute = $resource->getPrimaryRoute();
+            if (!$primaryRoute) {
+                continue;
+            }
+
+            $menuItem = $menu->addChild($resource->getLabel(), [
+                'route' => $primaryRoute->getName(),
             ]);
 
-            if ($resource['icon']) {
-                $menuItem->setExtra('icon', $resource['icon']);
+            if ($resource->getIcon()) {
+                $menuItem->setExtra('icon', $resource->getIcon());
             }
         }
 

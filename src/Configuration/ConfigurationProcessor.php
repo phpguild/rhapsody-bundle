@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace PhpGuild\RhapsodyBundle\Configuration;
 
 use PhpGuild\RhapsodyBundle\Configuration\Model\Resource\ResourceCollection;
-use PhpGuild\RhapsodyBundle\Configuration\Transformer\ResourceTransformer;
 use PhpGuild\RhapsodyBundle\Provider\ThemeProviderException;
 use Psr\Cache\InvalidArgumentException;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\Cache\CacheInterface;
 
 /**
@@ -16,8 +16,8 @@ use Symfony\Contracts\Cache\CacheInterface;
  */
 final class ConfigurationProcessor
 {
-    /** @var ResourceTransformer $resourceTransformer */
-    private $resourceTransformer;
+    /** @var SerializerInterface $serializer */
+    private $serializer;
 
     /** @var CacheInterface $cache */
     private $cache;
@@ -31,16 +31,16 @@ final class ConfigurationProcessor
     /**
      * ConfigurationProcessor constructor.
      *
-     * @param ResourceTransformer   $resourceTransformer
-     * @param CacheInterface        $cache
-     * @param ParameterBagInterface $parameterBag
+     * @param SerializerInterface    $serializer
+     * @param CacheInterface         $cache
+     * @param ParameterBagInterface  $parameterBag
      */
     public function __construct(
-        ResourceTransformer $resourceTransformer,
+        SerializerInterface $serializer,
         CacheInterface $cache,
         ParameterBagInterface $parameterBag
     ) {
-        $this->resourceTransformer = $resourceTransformer;
+        $this->serializer = $serializer;
         $this->cache = $cache;
         $this->originalConfiguration = $parameterBag->get('rhapsody');
     }
@@ -62,17 +62,14 @@ final class ConfigurationProcessor
             $cacheKey = sprintf('rhapsody.configuration.%s', $context);
 
             $this->configuration[$context] = $this->cache->get($cacheKey, function () use ($context, $configuration) {
-                /** @var ResourceCollection $resourceCollection */
-                $resourceCollection = $this->resourceTransformer->transform($context, $configuration);
-
-                if (!$resourceCollection->getTheme()) {
-                    throw new ThemeProviderException(sprintf(
-                        '%s parameter is not configured',
-                        'rhapsody.contexts.' . $context . '.theme'
-                    ), 1002);
-                }
-dump($resourceCollection);exit;
-                return $resourceCollection;
+                $data = $this->serializer->deserialize(
+                    json_encode($configuration),
+                    ResourceCollection::class,
+                    'json',
+                    [ 'contextName' => $context ]
+                );
+                return $data;
+//                dump($data);exit;
             });
         }
     }

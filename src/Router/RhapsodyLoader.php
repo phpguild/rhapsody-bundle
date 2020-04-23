@@ -3,6 +3,9 @@
 namespace PhpGuild\RhapsodyBundle\Router;
 
 use PhpGuild\RhapsodyBundle\Configuration\ConfigurationProcessor;
+use PhpGuild\RhapsodyBundle\Configuration\Model\Action\ActionInterface;
+use PhpGuild\RhapsodyBundle\Configuration\Model\Resource\ResourceCollectionInterface;
+use PhpGuild\RhapsodyBundle\Configuration\Model\Resource\ResourceElementInterface;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\Config\Loader\LoaderResolverInterface;
 use Symfony\Component\Routing\Route;
@@ -45,11 +48,18 @@ class RhapsodyLoader implements LoaderInterface
 
         $routes = new RouteCollection();
 
-        foreach ($this->configurationProcessor->getConfiguration() as $context => $contextConfiguration) {
-            foreach ($contextConfiguration['resources'] as $resourceConfiguration) {
-                foreach ($resourceConfiguration['actions'] as $action => $actionConfiguration) {
-                    $routes->add($actionConfiguration['routeName'], new Route($actionConfiguration['routePath'], [
-                        '_controller' => 'PhpGuild\RhapsodyBundle\Action\ListAction::__invoke',
+        /** @var ResourceCollectionInterface $resourceCollection */
+        foreach ($this->configurationProcessor->getConfiguration() as $resourceCollection) {
+            /** @var ResourceElementInterface $resourceElement */
+            foreach ($resourceCollection->getResources() as $resourceElement) {
+                /** @var ActionInterface $action */
+                foreach ($resourceElement->getActions() as $action) {
+                    $actionRoute = $action->getRoute();
+                    if (!$actionRoute) {
+                        continue;
+                    }
+                    $routes->add($actionRoute->getName(), new Route($actionRoute->getPath(), [
+                        '_controller' => $action->getController(),
                     ]));
                 }
             }

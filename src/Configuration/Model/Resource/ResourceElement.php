@@ -8,9 +8,9 @@ use PhpGuild\RhapsodyBundle\Configuration\Model\Action\ActionInterface;
 use PhpGuild\RhapsodyBundle\Configuration\Model\Field\RouteInterface;
 
 /**
- * Class ResourceNormalizer
+ * Class ResourceElement
  */
-class ResourceNormalizer implements ResourceNormalizerInterface
+class ResourceElement implements ResourceElementInterface
 {
     /** @var RouteInterface|null $primaryRoute */
     protected $primaryRoute;
@@ -39,9 +39,9 @@ class ResourceNormalizer implements ResourceNormalizerInterface
      *
      * @param RouteInterface|null $primaryRoute
      *
-     * @return ResourceNormalizerInterface|self
+     * @return ResourceElementInterface|self
      */
-    public function setPrimaryRoute(?RouteInterface $primaryRoute): ResourceNormalizerInterface
+    public function setPrimaryRoute(?RouteInterface $primaryRoute): ResourceElementInterface
     {
         $this->primaryRoute = $primaryRoute;
 
@@ -63,9 +63,9 @@ class ResourceNormalizer implements ResourceNormalizerInterface
      *
      * @param string|null $label
      *
-     * @return ResourceNormalizerInterface|self
+     * @return ResourceElementInterface|self
      */
-    public function setLabel(?string $label): ResourceNormalizerInterface
+    public function setLabel(?string $label): ResourceElementInterface
     {
         $this->label = $label;
 
@@ -87,9 +87,9 @@ class ResourceNormalizer implements ResourceNormalizerInterface
      *
      * @param string|null $icon
      *
-     * @return ResourceNormalizerInterface|self
+     * @return ResourceElementInterface|self
      */
-    public function setIcon(?string $icon): ResourceNormalizerInterface
+    public function setIcon(?string $icon): ResourceElementInterface
     {
         $this->icon = $icon;
 
@@ -134,9 +134,9 @@ class ResourceNormalizer implements ResourceNormalizerInterface
      *
      * @param ActionInterface[] $actions
      *
-     * @return ResourceNormalizerInterface|self
+     * @return ResourceElementInterface|self
      */
-    public function setActions(array $actions): ResourceNormalizerInterface
+    public function setActions(array $actions): ResourceElementInterface
     {
         $this->actions = $actions;
 

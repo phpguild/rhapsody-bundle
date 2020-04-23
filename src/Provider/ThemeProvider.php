@@ -38,11 +38,12 @@ class ThemeProvider
      * @param string $originalView
      *
      * @return string
+     * @throws ThemeProviderException
      */
     public function getView(string $originalView): string
     {
         $context = $this->configurationManager->getContext();
-        $theme = $this->configurationManager->getTheme();
+        $theme = $this->configurationManager->getConfiguration()->getTheme();
 
         $view = sprintf('%s/%s', $context, $originalView);
         if (!$this->twig->getLoader()->exists($view)) {
