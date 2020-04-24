@@ -7,13 +7,6 @@ services:
     resource: '../../*'
     exclude: '../../{DependencyInjection,Resources,RhapsodyBundle.php}'
 
-  PhpGuild\RhapsodyBundle\Action\:
-      resource: ../../Action
-      tags: [ controller.service_arguments ]
-
-  PhpGuild\RhapsodyBundle\Router\RhapsodyLoader:
-    tags: [ routing.loader ]
-
   PhpGuild\RhapsodyBundle\Configuration\RhapsodyConfigurationProcessor:
     arguments: [ '%rhapsody%' ]
 
