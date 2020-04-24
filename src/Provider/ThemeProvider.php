@@ -6,6 +6,7 @@ namespace PhpGuild\RhapsodyBundle\Provider;
 
 use PhpGuild\ResourceBundle\Configuration\ConfigurationException;
 use PhpGuild\RhapsodyBundle\Configuration\RhapsodyConfigurationManager;
+use Psr\Cache\InvalidArgumentException;
 use Twig\Environment;
 
 /**
@@ -40,6 +41,7 @@ class ThemeProvider
      *
      * @return string
      * @throws ConfigurationException
+     * @throws InvalidArgumentException
      */
     public function getView(string $originalView): string
     {

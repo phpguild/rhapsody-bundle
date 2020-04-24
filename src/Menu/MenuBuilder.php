@@ -9,6 +9,7 @@ use Knp\Menu\ItemInterface;
 use PhpGuild\ResourceBundle\Configuration\ConfigurationException;
 use PhpGuild\ResourceBundle\Model\Resource\ResourceElementInterface;
 use PhpGuild\RhapsodyBundle\Configuration\RhapsodyConfigurationManager;
+use Psr\Cache\InvalidArgumentException;
 
 /**
  * Class MenuBuilder
@@ -40,6 +41,7 @@ class MenuBuilder
      *
      * @return ItemInterface
      * @throws ConfigurationException
+     * @throws InvalidArgumentException
      */
     public function createSidebarMenu(): ItemInterface
     {
