@@ -1,0 +1,3 @@
+{% for action in field.type.collection %}
+    {% include '@Rhapsody/resource/field/link.html.twig' with { action: action } only %}
+{% endfor %}
