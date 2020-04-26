@@ -34,10 +34,10 @@ class Configuration implements ConfigurationInterface
     /**
      * addResourceConfigurationContext
      *
-     * @param NodeBuilder $context
+     * @param NodeBuilder $nodeBuilder
      */
-    public function addResourceConfigurationContext(NodeBuilder $context): void
+    public function addResourceConfigurationContext(NodeBuilder $nodeBuilder): void
     {
-        $context->scalarNode('theme')->isRequired()->cannotBeEmpty()->end();
+        $nodeBuilder->scalarNode('theme')->isRequired()->cannotBeEmpty()->end();
     }
 }
