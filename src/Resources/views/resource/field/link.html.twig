@@ -1,1 +1,9 @@
-<a href="#">{{ action.label }}</a>
+{% if action.route %}
+    {% set parameters = [] %}
+    {% for parameterKey in action.route.parameters|keys %}
+        {% set parameters = { (parameterKey): action.route.parameters[parameterKey]|replace({ '{resource.id}' : resource.id }) }|merge(parameters) %}
+    {% endfor %}
+    <a href="{{ path(action.route.name, parameters) }}">{{ action.label }}</a>
+{% else %}
+    <span>{{ action.label }}</span>
+{% endif %}
